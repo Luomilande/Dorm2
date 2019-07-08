@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- saved from url=(0081)http://www.17sucai.com/preview/427735/2018-01-25/%E7%99%BB%E5%BD%95.rar/demo.html -->
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>宿舍管理系统</title>
+    <link rel="icon" href="../img/ico.png">
+    <link href="../content/login.css" rel="stylesheet" type="text/css">
+    <script src="../Scripts/md5.js"></script>
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../Scripts/axios.min.js"></script>
+    <script src="../Scripts/RequestMethod.js"></script>
+    <script src="../Scripts/extend.js"></script>
+</head>
+
+<body>
+    <div class="login_box">
+        <div class="login_l_img"><img src="../img/login-img.png"></div>
+        <div class="login">
+            <div class="login_logo"><img src="../img/login_logo.png"></div>
+            <div class="login_name">
+                <p>宿舍管理系统</p>
+            </div>
+            <form>
+                <input id="JobNumber" type="text" placeholder="用户名">
+                <input id="Password" type="password" placeholder="密码">
+                <input onclick="login()" value="登录" style="width:100%;" type="button">
+            </form>
+        </div>
+    </div>
+    {{!-- <div id="messageBox" style="position: fixed; max-width:350px; right: 16px;top:  16px; z-index: 999; ">
+        <div
+            style="width:330px;margin-bottom:12px;  min-height:78px; padding: 14px 26px 14px 13px; border-radius: 8px; box-sizing: border-box; border: 1px solid #ebeef5; position: relative;background-color: #fff;box-shadow: 0 2px 12px 0 rgba(0,0,0,.1); transition: opacity .3s,transform .3s,left .3s,right .3s,top .4s,bottom .3s; overflow: hidden;">
+            <h2 style="font-weight: 700;font-size: 16px;color: #303133; margin: 0;">这是标题</h2>
+            <div style="font-size: 14px; line-height: 21px;margin: 6px 0 0; color: #606266; text-align: justify;">
+                <p>这是内容</p>
+            </div>
+        </div>
+    </div> --}}
+</body>
+<script>
+    function login() {
+        if ($('#Password').val().trim() && $('#JobNumber').val().trim()) {
+            let json = {
+                JobNumber: $('#JobNumber').val().trim(),
+                Password: hex_md5($('#Password').val().trim())
+            }
+            AxiosPost('/AdminMan/Login', json, function (data) {
+                if (data.message) {
+                    window.location.href = "/index.html";
+                }else{
+                     $.showMessage("登录失败", "用户名或者密码错误");
+                }
+            })
+        } else {
+            $.showMessage("提示", "用户名或者密码不能为空");
+        }
+    }
+</script>
+
+</html>

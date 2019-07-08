@@ -1,0 +1,477 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>宿舍管理系统</title>
+    <link rel="icon" href="../img/ico.png">
+    <!-- Bootstrap Styles-->
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="../Content/font-awesome.css" rel="stylesheet" />
+    <!-- Morris Chart Styles-->
+    <link href="../Content/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="../Content/custom-styles.css" rel="stylesheet" />
+    <!-- Google Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href="../Content/Chart.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html"><i class="fa fa-gear"></i> <strong>宿舍管理系统</strong></a>
+            </div>
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <span
+                        style="padding: 0; font-size: 14px; padding-right: 35px;padding-top: 20px; color: white; display: block; cursor: pointer;"
+                        class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        {{user.Name}} 您好!!
+                    </span>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                             <a href="/AdminMan/Logout"><i class="glyphicon glyphicon-off"></i> 退出</a>
+                        </li>
+                        {{!-- <li class="divider"></li> --}}
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+        </nav>
+        <!---导航栏↑--->
+        <!--左导航栏↓-->
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
+            <div class="sidebar-collapse">
+               <ul class="nav" id="main-menu">
+
+                    <li>
+                        <a id="node1" href="index.html"><i class="fa fa-dashboard"></i> 基本信息</a>
+                    </li>
+                    <li>
+                        <a id="node2" href="outInInput.html"><i class="fa fa-desktop"></i>出入信息登记管理</a>
+                    </li>
+                    <li>
+                        <a id="node3" href="admininfo.html"><i class="fa fa-bar-chart-o"></i>管理员基本信息管理</a>
+                    </li>
+                    <li>
+                        <a id="node4" href="studentInfo.html"><i class="fa fa-qrcode"></i>学生信息管理</a>
+                    </li>
+                    <li>
+                        <a id="node5" href="dormInfo.html"><i class="fa fa-table"></i>宿舍基本信息管理</a>
+                    </li>
+                    <li>
+                        <a id="node6" href="dormMan.html"><i class="fa fa-edit"></i> 住宿管理 </a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </nav>
+        <!--左导航栏↑-->
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <!--内容-->
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            住宿信息 <small>信息登记管理</small>
+                        </h1>
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+                <div class="row">
+                    <div class="col-lg-12">
+            
+                        <div class="col-lg-12">
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-4">
+                                <div class="alert alert-success" style="position:absolute;display: none;" role="alert" id="tipok">信息提示:操作成功！</div>
+                                <div class="alert alert-danger" style="position:absolute;display: none;" role="alert" id="tipno">信息提示:操作失败！</div>
+                            </div>
+                            <div class="col-lg-4"></div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                宿舍配置信息填写
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-3" style="padding:0;">
+                                                <div class="col-xs-6 col-md-3" style="width: 100%;">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body easypiechart-panel">
+                                                            <h4>扫把</h4>
+                                                            <canvas id="myChart2"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3" style="padding:0;">
+                                                <div class="col-xs-6 col-md-3" style="width: 100%;">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body easypiechart-panel">
+                                                            <h4>拖把</h4>
+                                                            <canvas id="myChart3"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3" style="padding:0;">
+                                                <div class="col-xs-6 col-md-3" style="width: 100%;">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body easypiechart-panel">
+                                                            <h4>垃圾桶</h4>
+                                                            <canvas id="myChart4"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3" style="padding:0;">
+                                                <div class="col-xs-6 col-md-3" style="width: 100%;">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body easypiechart-panel">
+                                                            <h4>桶装水</h4>
+                                                            <canvas id="myChart5"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <form role="form">
+                                            <div class="form-group">
+                                                <label>扫把</label>
+                                                <input class="form-control" placeholder="扫把数量" oninput="if (value > 100) value = 100;if(value<0)value=0" id="Broom" type="number">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>拖把</label>
+                                                <input class="form-control" placeholder="拖把数量" oninput="if (value > 100) value = 100;if(value<0)value=0" id="Mop" type="number">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>垃圾桶</label>
+                                                <input class="form-control" placeholder="垃圾桶数量" oninput="if (value > 100) value = 100;if(value<0)value=0" id="Trash" type="number">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>桶装水</label>
+                                                <input class="form-control" placeholder="桶装水数量" oninput="if (value > 100) value = 100;if(value<0)value=0" id="Water" type="number">
+                                            </div>
+                                            <button type="button" class="btn btn-primary" onclick="AddTool()">保存</button>
+                                            <button type="button" class="btn btn-warning" onclick="Reset()">重置</button>
+                                            <div class="form-group" style="margin-top: 10px;">
+                                                <label>公告：</label>
+                                                <input class="form-control" placeholder="公告标题" id="Title">
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" placeholder="作者" id="Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" rows="3" placeholder="公告信息填写" id="Notice"></textarea>
+                                            </div>
+            
+                                            <button type="button" class="btn btn-primary" onclick="AddNotice()">发布</button>
+            
+                                        </form>
+                                    </div>
+                                    <!-- /.col-lg-6 (nested) -->
+                                    <!-- /.col-lg-6 (nested) -->
+                                    <div class="col-lg-6">
+                                        <div class="form-group col-lg-12">
+                                        </div>
+                                        <div class="col-lg-12"><label>搜索</label></div>
+                                        <div class="form-group col-lg-6">
+                                            <input type="email" class="form-control" id="Search" placeholder="输入标题">
+                                        </div>
+                                        <div class="form-group  col-lg-6"><button type="submit" class="btn btn-primary" onclick="search()">搜  索</button></div>
+            
+                                        <div class="col-lg-12">
+                                            <div class="panel-body" style="padding-left:0" id="Noticeinfo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row (nested) -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+            </div>
+            <!--内容end-->
+          
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+
+    <script>
+        window.onload = function () {
+
+            $("#node6").addClass("active-menu");      
+            axios.all([
+                AxiosGet("/DormMan/GetTool", null, donrminfo),
+                AxiosGet("/DormMan/GetListNotice", null, getlist)
+            ]).then(axios.spread(function (acct, perms) {
+                console.log("加载完毕!");
+      }));
+        }
+        function donrminfo(data) {
+            $("#Broom").val(data.Broom);
+            $("#Mop").val(data.Mop);
+            $("#Trash").val(data.Trash);
+            $("#Water").val(data.Water);
+    
+            var ctx2 = document.getElementById("myChart2").getContext("2d");
+            var ctx3 = document.getElementById("myChart3").getContext("2d");
+            var ctx4 = document.getElementById("myChart4").getContext("2d");
+            var ctx5 = document.getElementById("myChart5").getContext("2d");
+    
+            var doughnutData1 = {
+                labels: [
+                    "剩余",
+                    "使用"
+                ],
+                datasets: [
+                    {
+                        data: [data.Broom, 100 - data.Broom],
+                        backgroundColor: [
+                            "#FF6384",
+                            "#36A2EB"
+                        ],
+                        hoverBackgroundColor: [
+                            "#FF6384",
+                            "#36A2EB"
+                        ]
+                    }]
+            };
+            var DoughnutChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: doughnutData1,
+                responsive: true
+            });
+    
+            var doughnutData2 = {
+                labels: [
+                    "剩余",
+                    "使用"
+                ],
+                datasets: [
+                    {
+                        data: [data.Mop, (100 - data.Mop)],
+                        backgroundColor: [
+                            "#FF6384",
+                            "#36A2EB"
+                        ],
+                        hoverBackgroundColor: [
+                            "#FF6384",
+                            "#36A2EB"
+                        ]
+                    }]
+            };
+            var DoughnutChart = new Chart(ctx3, {
+                type: 'doughnut',
+                data: doughnutData2,
+                responsive: true
+            });
+    
+            var doughnutData3 = {
+                labels: [
+                    "剩余",
+                    "使用"
+                ],
+                datasets: [
+                    {
+                        data: [data.Trash, (100 - data.Trash)],
+                        backgroundColor: [
+                            "#FF6384",
+                            "#36A2EB"
+                        ],
+                        hoverBackgroundColor: [
+                            "#FF6384",
+                            "#36A2EB"
+                        ]
+                    }]
+            };
+            var DoughnutChart = new Chart(ctx4, {
+                type: 'doughnut',
+                data: doughnutData3,
+                responsive: true
+            });
+    
+            var doughnutData4 = {
+                labels: [
+                    "剩余",
+                    "使用"
+                ],
+                datasets: [
+                    {
+                        data: [data.Water, (100 - data.Water)],
+                        backgroundColor: [
+                            "#FF6384",
+                            "#36A2EB"
+                        ],
+                        hoverBackgroundColor: [
+                            "#FF6384",
+                            "#36A2EB"
+                        ]
+                    }]
+            };
+            var DoughnutChart = new Chart(ctx5, {
+                type: 'doughnut',
+                data: doughnutData4,
+                responsive: true
+            });
+    
+        }
+        function AddTool() {
+            var Broom = $("#Broom").val();
+            var Mop = $("#Mop").val();
+            var Trash = $("#Trash").val();
+            var Water = $("#Water").val();
+            var obj = new Object();
+    
+            obj.Broom = Broom;
+            obj.Mop = Mop;
+            obj.Trash = Trash;
+            obj.Water = Water;
+    
+            AxiosPost("/DormMan/AddTool", obj, addTooltip);
+    
+        }
+        function addTooltip(data) {
+            AxiosGet("/DormMan/GetTool", null, donrminfo);
+            if (data.message == 1) {
+                $("#tipok").fadeIn("slow");
+                setTimeout(function () { $('#tipok').fadeOut(); }, 1500);
+            } else {
+                $("#tipno").fadeIn("slow");
+                setTimeout(function () { ($('#tipno').fadeOut()); }, 1500);
+            }
+        }
+        function AddNotice() {
+            var Notice = $("#Notice").val();
+            var Title = $("#Title").val();
+            var Name = $("#Name").val();
+            if (Name == "" && Title != "" && Notice != "") {
+                Name = "管理员";
+                var obj = new Object();
+                obj.Notice = Notice;
+                obj.Title = Title;
+                obj.Name = Name;
+                AxiosPost("/DormMan/AddNotice", obj, addNoticetip);
+            } else {
+                            $("#tipno").fadeIn("slow");
+                setTimeout(function () { ($('#tipno').fadeOut()); }, 1500);
+            }
+            
+            
+        }
+        function addNoticetip(data) {
+            if (data.message == 1) {
+                $("#tipok").fadeIn("slow");
+                setTimeout(function () { $('#tipok').fadeOut(); }, 1500);
+            } else {
+                $("#tipno").fadeIn("slow");
+                setTimeout(function () { ($('#tipno').fadeOut()); }, 1500);
+            }
+            AxiosGet("/DormMan/GetListNotice", null, getlist);
+        }
+        function getlist(data)
+        {
+            $("#Noticeinfo").empty();
+            $("#Title").val("");
+            $("#Notice").val("");
+            $("#Name").val("");
+            if (data =="") {
+                            $("#Noticeinfo").append(
+                    `
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="col-lg-6"><h3 class="panel-title">公告：无此类公告</div> <div style="text-align:right">作者:无此类公告</div></h3>
+                        </div>
+                        <div class="panel-body">无此类公告
+                        </div>
+                    </div>`
+                )
+            } else {
+                          $.each(data, function (i, item) {
+                $("#Noticeinfo").append(
+                    `
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="col-lg-6"><h3 class="panel-title">公告：${item.Title}</div> <div style="text-align:right">发布时间:${item.DateTime}</div></h3>
+                        </div>
+                        <div class="panel-body">${item.Notice}
+                        </div>
+                    </div>`
+                )
+            })
+            }
+    
+            }
+        function search() {
+            var Title = $("#Search").val();//学号
+            if (Title != "") {
+                var obj = new Object();
+                obj.Title = Title;
+                AxiosPost("/DormMan/SearchTool", obj, getlist);
+            } else {
+                AxiosGet("/DormMan/GetListNotice", null, getlist);
+            }
+        }
+        function Reset() {
+            $("#Title").val("");
+            $("#Notice").val("");
+            $("#Broom").val("0");
+            $("#Mop").val("0");
+            $("#Trash").val("0");
+            $("#Water").val("0");
+        }
+    </script>
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/axios.min.js"></script>
+    <script src="../Scripts/RequestMethod.js"></script>
+
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <!--自定义样式-->
+    <script src="/Scripts/custom.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="../Scripts/jquery.metisMenu.js"></script>
+    <!-- Morris Chart Js -->
+    <script src="../Scripts/morris/raphael-2.1.0.min.js"></script>
+    <script src="../Scripts/morris.js"></script>
+
+    <script src="../Scripts/easypiechart.js"></script>
+    <script src="../Scripts/easypiechart-data.js"></script>
+
+    <script src="../Scripts/Lightweight-Chart/jquery.chart.js"></script>
+
+    <!-- Custom Js -->
+    <script src="../Scripts/Chart.bundle.min.js"></script>
+    <script src="../Scripts/Chart.min.js"></script>
+</body>
+
+</html>
